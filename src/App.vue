@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    发布了
+    发布了1
   </div>
 </template>
 
