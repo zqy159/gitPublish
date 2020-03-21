@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    ssssssssssssssssssssssssss
-    sdfasf
-    21342143
-    sadfsa
+    发布了
   </div>
 </template>
 
