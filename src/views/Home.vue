@@ -2,7 +2,7 @@
   <div class="Home">
     Homesadsad
     asdsadsa
-    asdasd
+    asdasdsadsad
     <router-view></router-view>
   </div>
 </template>
