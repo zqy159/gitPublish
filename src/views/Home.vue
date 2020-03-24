@@ -1,6 +1,6 @@
 <template>
   <div class="Home">
-    Home
+    Homesadsad
 
     asdasd
     <router-view></router-view>
