@@ -1,7 +1,7 @@
 <template>
   <div class="Home">
     Homesadsad
-
+    asdsadsa
     asdasd
     <router-view></router-view>
   </div>
