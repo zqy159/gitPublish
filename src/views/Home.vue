@@ -1,8 +1,8 @@
 <template>
   <div class="Home">
     Homesadsad
-    asdsadsa
-    asdasdsadsad
+    asdsadsasadasdssssssssssss
+    asdasdsadsadasaaasdsadsa22222222222222
     <router-view></router-view>
   </div>
 </template>
