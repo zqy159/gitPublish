@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	.div {
+		/*display: inline-block;*/
+		float: left;
+		width: 50%;
+		height: 200px;
+		box-sizing: border-box;
+		border: 1px solid #f00;
+	}
+
+	.box {
+		/*height: 200px;*/
+		box-sizing: border-box;
+		width: 200px;
+		border: 1px solid #f00;
+	}
+</style>
+
+<body>
+	<div class="box">
+		<div class="div" style="border-right: 1px solid #ccc">
+		</div>
+		<div class="div">
+		</div>
+	</div>
+
+</body>
+
+</html>
+<script>
+	//传递两个参数，一个是object, 一个是proxy的handler
+	//如果是不是嵌套的object，直接加上proxy返回，如果是嵌套的object，那么进入addSubProxy进行递归。 
+	function toDeepProxy(object, handler) {
+		if (!isPureObject(object)) {
+			addSubProxy(object, handler);
+		}
+		function addSubProxy(object, handler) {
+			for (let prop in object) {
+				if (typeof object[prop] == 'object') {
+					if (!isPureObject(object[prop])) addSubProxy(object[prop], handler);
+					object[prop] = new Proxy(object[prop], handler);
+				}
+			}
+			object = new Proxy(object, handler)
+		}
+
+		function isPureObject(object) {
+			if (typeof object === 'object') {
+				for (let prop in object) {
+					if (typeof object[prop] == 'object') {
+						return false;
+					}
+				}
+			} else {
+				return false;
+
+			}
+			return true;
+		}
+	}
+	// function toDeepProxy(object, handler) {
+	// 	if(typeof object)
+	// }
+	//这是一个嵌套了对象和数组的对象
+	let object = {
+		name: {
+			first: {
+				four: 5,
+				second: {
+					third: 'ssss'
+				}
+			}
+		},
+		class: 5,
+		arr: [1, 2, { arr1: 10 }],
+		age: {
+			age1: 10,
+			s: {
+				y: 3
+			}
+		}
+	}
+	// let object = {
+	// 	s: 1
+	// }
+	//这是一个嵌套了对象和数组的数组
+	let objectArr = [{ name: { first: 'ss' }, arr1: [1, 2] }, 2, 3, 4, 5, 6]
+
+	//这是proxy的handler
+	let handler = {
+		get(target, property) {
+			console.log('get:' + property)
+			return Reflect.get(target, property);
+		},
+		set(target, property, value) {
+			console.log('set:' + property + '=' + value);
+			return Reflect.set(target, property, value);
+		}
+	}
+	//变成监听对象
+	// objects = toDeepProxy(object, handler);
+	objectArrs = toDeepProxy(objectArr, handler);
+
+	// //进行一系列操作
+	// console.time('pro')
+	// objectArr.length
+	// objectArr[3];
+	// objectArr[2] = 10
+	// object.arr.push(3)
+	console.log(Array.isArray(objectArr[0].arr1))
+	console.log(objectArr[0].arr1)
+	// objectArr[0].name.first = 'ss'
+	// objectArr[0].arr1[0]
+	// object.name.first.second.third = 'yyyyy'
+	// object.class = 6;
+	// object.name.first.four
+	// object.arr[2].arr1
+	// object.age.age1 = 20;
+	// console.timeEnd('pro')
+
+</script>
